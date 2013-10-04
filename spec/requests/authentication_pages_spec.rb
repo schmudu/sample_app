@@ -1,6 +1,6 @@
 # RSpec custom matchers are in spec/support/utilities.rb
 require 'spec_helper'
-FOO = 'Sign in'
+include Constants
 
 describe "Authentication" do
   subject { page }
@@ -8,7 +8,7 @@ describe "Authentication" do
     before { visit signin_path }
 
     it { should have_content('Sign in ')}
-    it { should have_content(FOO)}
+    it { should have_content(LINK_SIGN_IN)}
     it { should have_title('Sign in ')}
   end
 
