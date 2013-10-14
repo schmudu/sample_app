@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :sign_in_user_filter, only: [:new, :create]
   before_action :signed_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
@@ -53,6 +54,13 @@ class UsersController < ApplicationController
     end
 
     # before filters
+    def sign_in_user_filter
+      # signed in user is not allowed to sign up or visit create action
+      if signed_in?
+        redirect_to root_url, notice: "Already logged in"
+      end
+    end
+
     def admin_user
       redirect_to(root_url) unless current_user.admin?
     end
