@@ -38,5 +38,19 @@ describe "MicropostPages" do
         expect { click_link "delete" }.to change(Micropost, :count).by(-1)
       end
     end
+
+    describe "signed in as another user" do
+      let(:another_user) { FactoryGirl.create(:user) }
+      before do
+        sign_out user
+        sign_in another_user
+        visit user_path(user)
+      end
+
+      describe "should not see any delete links" do
+        # a user viewing another users page should not see anything
+        it { should_not have_link("delete") }
+      end
+    end
   end
 end

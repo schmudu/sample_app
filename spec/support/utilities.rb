@@ -18,3 +18,11 @@ def sign_in(user, options={})
     click_button "Sign in"
   end
 end
+
+def sign_out(user, options={})
+  if options[:no_capybara]
+    cookies.delete(:remember_token)
+  else
+    delete signout_path
+  end
+end
